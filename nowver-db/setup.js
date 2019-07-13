@@ -20,7 +20,7 @@ async function setup() {
     const config = {
         database: process.env.DB_NAME || 'nowver',
         username: process.env.DB_USER || 'user_db',
-        password: process.env.DB_PASS || '1106',
+        password: process.env.DB_PASS || '110',
         host: process.env.DB_HOST || '192.168.99.100',
         dialect: 'postgres',
         setup: 'true',
