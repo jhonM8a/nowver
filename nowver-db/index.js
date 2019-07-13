@@ -15,6 +15,10 @@ module.exports = async function (config) {
 
   await sequelize.authenticate()
 
+  if (config.setup) {
+    /**Crea la base de datos, y si existe una la bprra y la ceea */
+    await sequelize.sync({ force: true })
+  }
   const Agent = {}
   const Metric = {}
 

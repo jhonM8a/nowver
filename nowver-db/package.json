@@ -4,6 +4,7 @@
   "description": "A simple IoT Platfotm -DB module",
   "main": "index.js",
   "scripts": {
+    "setup": "SET DEBUG=nowver:* && node setup.js",
     "lint": "standard"
   },
   "author": "Jhon M. Ochoa L.",
@@ -12,6 +13,7 @@
     "standard": "^13.0.1"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.10.0"
