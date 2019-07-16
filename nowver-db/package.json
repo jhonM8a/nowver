@@ -6,12 +6,13 @@
   "scripts": {
     "setup": "SET DEBUG=nowver:* && node setup.js",
     "lint": "standard",
-    "test": "SET DEBUG=nowver:* && ava tests/agent-tests.js --verbose"
+    "test": "SET DEBUG=nowver:* && nyc --reporter=lcov ava tests/agent-tests.js --verbose"
   },
   "author": "Jhon M. Ochoa L.",
   "license": "MIT",
   "devDependencies": {
     "ava": "^2.2.0",
+    "nyc": "^14.1.1",
     "sqlite3": "^4.0.9",
     "standard": "^13.0.1"
   },
