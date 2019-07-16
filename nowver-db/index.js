@@ -3,8 +3,17 @@
 const setupDatabase = require('./lib/db')
 const setupAgent = require('./modelos/agent')
 const setupMetric = require('./modelos/metric')
+const defaults = require('defaults')
 
 module.exports = async function (config) {
+
+  config = defaults(config, {
+    dialect: 'sqlite',
+    pool: { max: 10, min: 0, idle: 1000 },
+    query: {
+      raw: true
+    }
+  })
   const sequelize = setupDatabase(config);
   const AgentModel = setupAgent(config)
   const MetricModel = setupMetric(config)

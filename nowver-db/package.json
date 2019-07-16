@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "setup": "SET DEBUG=nowver:* && node setup.js",
-    "lint": "standard"
+    "lint": "standard",
+    "test": "SET DEBUG=nowver:* && ava tests/agent-tests.js --verbose"
   },
   "author": "Jhon M. Ochoa L.",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^2.2.0",
+    "sqlite3": "^4.0.9",
     "standard": "^13.0.1"
   },
   "dependencies": {
