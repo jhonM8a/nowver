@@ -10,6 +10,23 @@ let sandbox = null
 let uuid = "JJJ-HH-OO"
 /**Para tener instancias por aparte del fixtures */
 let single = Object.assign({}, agentFixtures.single)
+/**Argumentos que reciben las funciones de AgentModel */
+let connectedArgs = { where: { connected: true } }
+let usernameArgs = {
+  where: { username: 'nowere', connected: true }
+}
+
+
+let newAgent = {
+  uuid: '333J-HH-OO',
+  name: 'fixture',
+  username: 'jhon',
+  hostname: 'test-host',
+  pid: '0',
+  connected: false,
+
+}
+
 let id = 1
 let config = {
   logging: function () { }
@@ -40,6 +57,16 @@ test.beforeEach(async () => {
   //Model update stup
   AgentStub.update = sandbox.stub()
   AgentStub.update.withArgs(single, uuidArgs).returns(Promise.resolve(single))
+  //Model create stup
+  AgentStub.create = sandbox.stub()
+  AgentStub.create.withArgs(newAgent).returns(Promise.resolve({
+    toJSON() { return newAgent }
+  }))
+  //Model findAll stub
+  AgentStub.findAll = sandbox.stub()
+  AgentStub.findAll.withArgs().returns(Promise.resolve(agentFixtures.all))
+  AgentStub.findAll.withArgs(connectedArgs).returns(Promise.resolve(agentFixtures.connected))
+  AgentStub.findAll.withArgs(usernameArgs).returns(Promise.resolve(agentFixtures.test))
 
   const setupDatabase = proxiquire('../', {
     './modelos/agent': () => AgentStub,
@@ -78,4 +105,11 @@ test.serial("Agent#CreateOrUpdate -  exists", async t => {
   t.true(AgentStub.findOne.calledTwice, 'findOne should be called twice')
   t.true(AgentStub.update.calledOnce, 'Update should be called once')
   t.deepEqual(agent, single, "agent should be the same")
+})
+
+test.serial("Agent#findAll#WithOutArgs", async t => {
+  let agent = await db.Agent.findAll()
+
+  t.true(AgentStub.findAll.called, "findAll should be called on model")
+  t.true(AgentStub.findAll.calledOnce, "findAll should be called once")
 })
