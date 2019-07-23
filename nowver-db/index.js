@@ -1,9 +1,10 @@
 'use strict'
 
 const setupDatabase = require('./lib/db')
-const setupAgent = require('./modelos/agent')
-const setupMetric = require('./modelos/metric')
+const setupAgentModel = require('./modelos/agent')
+const setupMetricModel = require('./modelos/metric')
 const defaults = require('defaults')
+const setupAgent = require('./lib/agent')
 
 module.exports = async function (config) {
 
@@ -15,8 +16,8 @@ module.exports = async function (config) {
     }
   })
   const sequelize = setupDatabase(config);
-  const AgentModel = setupAgent(config)
-  const MetricModel = setupMetric(config)
+  const AgentModel = setupAgentModel(config)
+  const MetricModel = setupMetricModel(config)
 
   /** Se define la relación entre agentes y metricas*/
   AgentModel.hasMany(MetricModel)
@@ -28,7 +29,7 @@ module.exports = async function (config) {
     /**Crea la base de datos, y si existe una la bprra y la ceea */
     await sequelize.sync({ force: true })
   }
-  const Agent = {}
+  const Agent = setupAgent(AgentModel)
   const Metric = {}
 
   return {
