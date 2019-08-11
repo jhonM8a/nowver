@@ -1,0 +1,11 @@
+{
+  "name": "nowver-utils",
+  "version": "1.0.0",
+  "description": "This is module of util, config, modules generic etc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jhon M. Ochoa",
+  "license": "MIT"
+}

@@ -19,6 +19,8 @@
     "chalk": "^2.4.2",
     "debug": "^4.1.1",
     "g": "^2.0.1",
+    "nowver-db": "file:../nowver-db",
+    "nowver-utils": "file:../nowver-utils",
     "mosca": "^2.8.3",
     "mqtt": "^3.0.0",
     "redis": "^2.8.0"

@@ -1,15 +1,26 @@
-'use strict'
+'use stric'
 
 const debug = require('debug')('nowver:mqtt')
 const mosca = require('mosca') 
 const redis = require('readline')
 const chalk = require('chalk')
-
-
+const db = require("nowver-db")
+const utils = require("nowver-utils")
+const config = utils.db.config
 const backed ={
     type:'redis',
     redis,
     return_buffers:true
+}
+
+const configFunciona = {
+    database: process.env.DB_NAME || 'nowver',
+    username: process.env.DB_USER || 'user_db',
+    password: process.env.DB_PASS || '1106',
+    host: process.env.DB_HOST || '192.168.99.100',
+    dialect: 'postgres',
+    logging: s => debug(s),
+    port: '5432'
 }
 
 /**Configuración para el servidor mosca */
@@ -19,6 +30,8 @@ const settings = {
 }
 
 const server = new mosca.Server(settings)
+
+let Agent, Metric
 
 server.on('clientConnected', client =>{
     debug(`Client Connected : ${client.id}`)
@@ -33,7 +46,12 @@ server.on('published', (packet, client)=>{
     debug(`Payload: ${packet.payload}`)
 })
 
-server.on('ready', ()=>{
+server.on('ready', async ()=>{
+    console.log(config)
+    const services = await db(configFunciona).catch(handleErrorfatal)
+    Agent = services.Agent
+    Metric = services.Metric
+
     console.log(`${chalk.green('[nowver-mqtt]')} server is runnig`)
 })
 /**Manejador de exepciones de emmiters */
