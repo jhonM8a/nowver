@@ -6,6 +6,7 @@ const redis = require('readline')
 const chalk = require('chalk')
 const db = require("nowver-db")
 const utils = require("nowver-utils")
+const {parsePayload} = require('./utils')
 const config = utils.db.config
 const backed ={
     type:'redis',
@@ -29,21 +30,63 @@ const settings = {
     backed
 }
 
+
 const server = new mosca.Server(settings)
+const clients = new Map()
 
 let Agent, Metric
 
 server.on('clientConnected', client =>{
     debug(`Client Connected : ${client.id}`)
+    clients.set(client.id, null)
 })
 
 server.on('clientDisconnected', client =>{
     debug(`Client Disconnected: ${client.id}`)
 })
 
-server.on('published', (packet, client)=>{
+server.on('published', async (packet, client)=>{
     debug(`Received: ${packet.topic}`)
-    debug(`Payload: ${packet.payload}`)
+
+    switch(package.topic){
+        case 'agent/connected':
+        case 'agent/disconnected':
+            debug(`Payload: ${packet.payload}`)
+            break
+        case 'agent/message':
+            debug(`Payload: ${packet.payload}`)
+            const payload = parsePayload(packet.payload)
+            if(payload){
+                payload.agent.connected = true
+                let agent
+                try {
+                    agent = await Agent.createOrUpdate(payload.agent)
+                } catch (error) {
+                    return handleError(error)
+                }
+                debug(`Agent: ${agent.uuid} saved`)
+                //Notificar que el agente fue conectado
+                if(!clients.get(client.id)){
+                    clientInformation.set(client.id, agent)
+                    server.publish({
+                        topic : 'agent/connected',
+                        payload : JSON.stringify({
+                            agent:{
+                                uuid: agent.uuid,
+                                name: agent.name,
+                                hotname: agent.hotname,
+                                pid: agent.pid,
+                                connected : agent.connected
+                            }
+
+                        })
+                    })
+                }
+            }
+            break
+    }
+
+    
 })
 
 server.on('ready', async ()=>{
@@ -61,6 +104,11 @@ function handleErrorfatal(error){
     console.error(`${chalk.red('[Fatal error: ]')} ${error.message}`)
     console.error(error.stack)
     process.exit(1)
+}
+
+function handleError(error){
+    console.error(`${chalk.red('[ error: ]')} ${error.message}`)
+    console.error(error.stack)
 }
 /**Manejadores de execpciones para execpciones no controladas
  * y para las promesas
