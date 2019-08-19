@@ -1,0 +1,22 @@
+{
+  "name": "nowver-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple IoT this is Agent",
+  "main": "index.js",
+  "scripts": {
+    "lint": " standard"
+  },
+  "author": "Jhon M. Ochoa",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^13.1.0"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "defaults": "^1.0.3",
+    "mqtt": "^3.0.0",
+    "nowver-utils": "file:../nowver-utils",
+    "uuid": "^3.3.3"
+  }
+}

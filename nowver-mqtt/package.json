@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "standard",
     "start-dev": "SET DEBUG=nowver:* && nodemon server.js",
-    "start": "NODE_ENV=production node server.js"
+    "start": "SET NODE_ENV=production node server.js"
   },
   "author": "Jhon M. Ochoa Lemus",
   "license": "MIT",

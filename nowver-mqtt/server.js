@@ -90,7 +90,7 @@ server.on('published', async (packet, client)=>{
                 debug(`Agent: ${agent.uuid} saved`)
                 //Notificar que el agente fue conectado
                 if(!clients.get(client.id)){
-                    clientInformation.set(client.id, agent)
+                    clients.set(client.id, agent)
                     server.publish({
                         topic : 'agent/connected',
                         payload : JSON.stringify({
