@@ -1,11 +1,8 @@
-# nowver-agent
-
-## Usage
-
-``` js
-const NowverAgent = require('nowver-agent')
+const NowverAgent = require('../')
 
 const agent = new NowverAgent({
+    name:'myapp',
+    username:'admin',
     interval:2000
 })
 
@@ -27,5 +24,3 @@ agent.on('agent/message', payload =>{
 })
 
 setTimeOut(() => agent.disconnect(), 10000)
-
-```

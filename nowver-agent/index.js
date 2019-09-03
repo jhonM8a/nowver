@@ -4,7 +4,7 @@ const debug = require('debug')('nowver:agent')
 const clientMqtt = require('mqtt')
 const defaults = require('defaults')
 const EventEmitter = require('events')
-const  {utils}  = require('nowver-utils')
+const  utils  = require('nowver-utils')
 const uuid = require('uuid')
 
 const options = {
@@ -47,7 +47,7 @@ class nowvereAgent extends EventEmitter{
             })
 
             this._client.on('message', (topic, payload)=>{
-                payload = utils.parsePayload(payload)
+                payload = utils.parse.parsePayload(payload)
                 
                 let broadcast = false
 

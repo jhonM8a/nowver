@@ -1,0 +1,23 @@
+{
+  "name": "nowver-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A simple IoT API",
+  "main": "server.js",
+  "scripts": {
+    "lint": "standard",
+    "start-dev": "SET DEBUG=nowver:* && nodemon server.js",
+    "start": "SET NODE_ENV=production node server.js"
+  },
+  "author": "Jhon M. Ochoa Lemus",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "standard": "^14.1.0"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "debug": "^4.1.1",
+    "express": "^4.17.1"
+  }
+}
