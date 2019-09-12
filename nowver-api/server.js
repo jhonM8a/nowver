@@ -37,11 +37,21 @@ function handleFatalError(err){
     process.exit(1)
 }
 
-process.on('uncaughtException', handleFatalError)
-process.on('unhandledRejection', handleFatalError)
+/**Practica para pruebas: 
+ * Si no se esta requeriendo el archivo
+ * se levanta el servidor comun y corriente
+ * de lo contrario no se ejecuta el server listen
+ * 
+ * 
+*/
+if(!module.parent){
+    process.on('uncaughtException', handleFatalError)
+    process.on('unhandledRejection', handleFatalError)
+    
+    server.listen(port, ()=>{
+        console.log(`${chalk.green('[nowver-api]')}: server listening in port ${port}`)
+    })
+}
 
-server.listen(port, ()=>{
-    console.log(`${chalk.green('[nowver-api]')}: server listening in port ${port}`)
-})
-
+module.exports = server
 

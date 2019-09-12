@@ -5,6 +5,7 @@
   "description": "A simple IoT API",
   "main": "server.js",
   "scripts": {
+    "test":"SET DEBUG=nowver:* && ava tests/api-tests.js --verbose",
     "lint": "standard",
     "start-dev": "SET DEBUG=nowver:* && nodemon server.js",
     "start": "SET NODE_ENV=production node server.js"
@@ -12,8 +13,10 @@
   "author": "Jhon M. Ochoa Lemus",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^2.3.0",
     "nodemon": "^1.19.1",
-    "standard": "^14.1.0"
+    "standard": "^14.1.0",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "chalk": "^2.4.2",
