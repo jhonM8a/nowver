@@ -3,5 +3,5 @@ const parsePayload = require('./parse')
 
 module.exports = {
     db:{...db},
-    parse
+    parsePayload
 }
