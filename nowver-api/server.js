@@ -5,12 +5,14 @@ const chalk = require('chalk')
 const express = require('express')
 const debug = require('debug')('nowver:api')
 const api = require('./api')
+const asyncify = require('express-asyncify')
+
 
 //Variables
 const port = process.env.PORT || 3000
 
-//Se crea una aplicaciòn de express
-const app = express()
+//Se crea una aplicaciòn de express que esta encapsulada dentro del wrapper
+const app = asyncify(express())
 //crear instancia del servidor http y se le pasa la app como requesrHandler
 const server = http.createServer(app)
 /** 

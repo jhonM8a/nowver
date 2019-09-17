@@ -5,7 +5,7 @@
   "description": "A simple IoT API",
   "main": "server.js",
   "scripts": {
-    "test":"SET DEBUG=nowver:* && ava tests/api-tests.js --verbose",
+    "test": "SET DEBUG=nowver:* && ava tests/api-tests.js --verbose",
     "lint": "standard",
     "start-dev": "SET DEBUG=nowver:* && nodemon server.js",
     "start": "SET NODE_ENV=production node server.js"
@@ -21,6 +21,9 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "debug": "^4.1.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-asyncify": "^1.0.0",
+    "nowver-db": "file:../nowver-db",
+    "nowver-utils": "file:../nowver-utils"
   }
 }
