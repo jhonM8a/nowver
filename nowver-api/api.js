@@ -5,6 +5,7 @@
 const debug = require('debug')('nowver:api:routes')
 const express = require('express')
 const db = require('nowver-db')
+const auth = require('express-jwt')
 const utils = require('nowver-utils')
 const configTest = {
     database: process.env.DB_NAME || 'nowver',
@@ -14,6 +15,7 @@ const configTest = {
     dialect: 'postgres',
     port: '5432'
 }
+const config = require('./config')
 //Permite dar soporte async y await a middleware y rutas de express
 const asyncify = require('express-asyncify')
 
@@ -37,12 +39,24 @@ api.use('*', async (req, res, next)=>{
     next()
 })
 
-api.get('/agents', async (req, res, next)=>{
+api.get('/agents', auth(config.auth),async (req, res, next)=>{
     debug('A request has come to /agents')
     
+    const {user} = req
+
+    if(!user || !user.username){
+        return next(new Error('Not authorized'))
+    }
+
     let agents = []
     try {
-        agents = await Agent.findConnected()
+        debug(`User token: ${user.username}`)
+        if(!user.jochoa){
+
+            agents = await Agent.findConnected()
+        }else{
+            agents = await Agent.findByUsername(user.username)
+        }
     } catch (error) {
         return next(error)
     }

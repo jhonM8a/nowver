@@ -11,5 +11,8 @@ module.exports = {
         setup: 'true',
         logging: s => debug(s),
         port: '5432'
+    },
+    auth:{
+        secret:process.env.SECRET || 'platzi'
     }
 }
