@@ -23,6 +23,6 @@
     "nowver-utils": "file:../nowver-utils",
     "mosca": "^2.8.3",
     "mqtt": "^3.0.0",
-    "redis": "^2.8.0"
+    "redis": "^3.1.1"
   }
 }
